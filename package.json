@@ -1,0 +1,18 @@
+{
+  "name": "startup-idea-feedback",
+  "version": "1.0.0",
+  "description": "A simple application to validate startup ideas using the Mom Test Bot and send feedback as a PDF via email.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "axios": "^0.24.0",
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "html-pdf": "^2.2.0",
+    "nodemailer": "^6.7.2"
+  },
+  "author": "Your Name",
+  "license": "MIT"
+}
