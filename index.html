@@ -8,10 +8,14 @@
 </head>
 <body>
     <div class="container">
-        <h1>Mom Test Bot</h1>
+        <h1>Validate your startup ideas before building</h1>
+        <p>Find the right questions to ask potential customers to get real and concrete insights.</p>
         <form id="ideaForm">
-            <textarea id="ideaInput" placeholder="Enter your startup idea here..."></textarea>
-            <button type="submit">Submit</button>
+            <label for="ideaInput">What's your startup or project idea?</label>
+            <input type="text" id="ideaInput" placeholder="Enter your startup idea here..." required>
+            <label for="emailInput">Email</label>
+            <input type="email" id="emailInput" placeholder="Enter your email..." required>
+            <button type="submit">Get PDF</button>
         </form>
         <div id="responseContainer"></div>
     </div>
