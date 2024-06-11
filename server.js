@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const pdf = require('html-pdf');
-const { Configuration, OpenAIApi } = require('openai');
+const axios = require('axios');
 
 const app = express();
 const port = 3000;
@@ -9,22 +9,23 @@ const port = 3000;
 app.use(bodyParser.json());
 app.use(express.static('public'));
 
-const configuration = new Configuration({
-    apiKey: 'YOUR_OPENAI_API_KEY',
-});
-const openai = new OpenAIApi(configuration);
+// Replace with the actual endpoint and API key
+const MOM_TEST_BOT_ENDPOINT = 'https://api.chatgpt.com/g/g-H7fQi3wHH-mom-test-bot';
+const API_KEY = 'YOUR_API_KEY_HERE';
 
 app.post('/generate-pdf', async (req, res) => {
     const idea = req.body.idea;
 
     try {
-        const completion = await openai.createCompletion({
-            model: 'text-davinci-002',
-            prompt: `This is a startup idea: ${idea}. How would a supportive mother respond to this idea?`,
-            max_tokens: 150,
+        const response = await axios.post(MOM_TEST_BOT_ENDPOINT, {
+            prompt: idea
+        }, {
+            headers: {
+                'Authorization': `Bearer ${API_KEY}`
+            }
         });
 
-        const momResponse = completion.data.choices[0].text.trim();
+        const momResponse = response.data.reply;
         const html = `<html><body><h1>Startup Idea Feedback</h1><p>${momResponse}</p></body></html>`;
 
         pdf.create(html).toStream((err, stream) => {
