@@ -1,29 +1,26 @@
 document.getElementById('ideaForm').addEventListener('submit', async function(event) {
     event.preventDefault();
     const idea = document.getElementById('ideaInput').value;
+    const email = document.getElementById('emailInput').value;
 
     const responseContainer = document.getElementById('responseContainer');
-    responseContainer.innerHTML = 'Generating response...';
+    responseContainer.innerHTML = 'Generating and sending PDF...';
 
     try {
-        const response = await fetch('/generate-pdf', {
+        const response = await fetch('/send-pdf', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ idea })
+            body: JSON.stringify({ idea, email })
         });
 
-        const blob = await response.blob();
-        const url = window.URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'MomTestResponse.pdf';
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        responseContainer.innerHTML = 'PDF generated successfully!';
+        if (response.ok) {
+            responseContainer.innerHTML = 'PDF sent to your email successfully!';
+        } else {
+            responseContainer.innerHTML = 'An error occurred while sending the PDF.';
+        }
     } catch (error) {
-        responseContainer.innerHTML = 'An error occurred while generating the PDF.';
+        responseContainer.innerHTML = 'An error occurred while sending the PDF.';
     }
 });
